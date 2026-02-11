@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STELLIZ - Precision Beyond Time</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --gold: #C9A962;
+      --gold-light: #E5D4A1;
+      --navy: #0A0E1A;
+      --navy-light: #141B2D;
+      --text-primary: #F5F5F5;
+      --text-secondary: #A0A0A0;
+    }
+    
+    .font-serif {
+      font-family: 'Cormorant Garamond', serif;
+    }
+    
+    .font-sans {
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    .text-gold {
+      color: var(--gold);
+    }
+    
+    .bg-navy {
+      background-color: var(--navy);
+    }
+    
+    .bg-navy-light {
+      background-color: var(--navy-light);
+    }
+    
+    .border-gold {
+      border-color: var(--gold);
+    }
+    
+    .hover-gold:hover {
+      color: var(--gold-light);
+    }
+    
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold) 0%, #B8944F 100%);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .btn-gold:hover {
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(201, 169, 98, 0.3);
+    }
+    
+    .btn-outline {
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .btn-outline:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+    
+    .watch-card {
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .watch-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .watch-card:hover .watch-overlay {
+      opacity: 1;
+    }
+    
+    .watch-card:hover .watch-image {
+      transform: scale(1.05);
+    }
+    
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .line-reveal {
+      width: 0;
+      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .line-reveal.visible {
+      width: 80px;
+    }
+    
+    .parallax-watch {
+      transition: transform 0.3s ease-out;
+    }
+    
+    .craft-icon {
+      transition: all 0.4s ease;
+    }
+    
+    .craft-card:hover .craft-icon {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 20px rgba(201, 169, 98, 0.5));
+    }
+    
+    .testimonial-card {
+      transition: all 0.4s ease;
+    }
+    
+    .testimonial-card:hover {
+      border-color: var(--gold);
+    }
+    
+    .nav-link {
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .hero-gradient {
+      background: radial-gradient(ellipse at center, rgba(201, 169, 98, 0.1) 0%, transparent 70%);
+    }
+    
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.3;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    
+    .shimmer {
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: shimmer 3s linear infinite;
+    }
+  </style>
+ </head>
+ <body class="bg-navy font-sans text-gray-100 h-full overflow-x-hidden">
+  <div id="app-container" class="w-full h-full overflow-auto"><!-- Navigation -->
+   <nav class="fixed top-0 left-0 right-0 z-50 bg-navy/90 backdrop-blur-md border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+     <div class="flex items-center justify-between h-20"><a href="#" class="font-serif text-2xl tracking-[0.3em] text-gold" id="nav-brand">STELLIZ</a>
+      <div class="hidden md:flex items-center space-x-10"><a href="#collection" class="nav-link text-sm tracking-widest uppercase text-gray-300 hover-gold">Collection</a> <a href="#story" class="nav-link text-sm tracking-widest uppercase text-gray-300 hover-gold">Story</a> <a href="#craftsmanship" class="nav-link text-sm tracking-widest uppercase text-gray-300 hover-gold">Craftsmanship</a> <a href="#contact" class="btn-outline px-6 py-2 text-xs tracking-widest uppercase">Contact</a>
+      </div><button class="md:hidden text-gold" id="mobile-menu-btn">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div>
+    </div><!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-navy-light border-t border-white/5">
+     <div class="px-6 py-8 space-y-6"><a href="#collection" class="block text-sm tracking-widest uppercase text-gray-300">Collection</a> <a href="#story" class="block text-sm tracking-widest uppercase text-gray-300">Story</a> <a href="#craftsmanship" class="block text-sm tracking-widest uppercase text-gray-300">Craftsmanship</a> <a href="#contact" class="block btn-outline px-6 py-3 text-xs tracking-widest uppercase text-center">Contact</a>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <section class="relative min-h-screen flex items-center justify-center pt-20">
+    <div class="hero-gradient absolute inset-0"></div>
+    <div class="absolute inset-0 opacity-20">
+     <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/10 rounded-full blur-3xl"></div>
+     <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gold/5 rounded-full blur-2xl"></div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20">
+     <div class="grid lg:grid-cols-2 gap-12 items-center"><!-- Hero Text -->
+      <div class="text-center lg:text-left">
+       <p class="text-gold text-sm tracking-[0.4em] uppercase mb-6 fade-in" id="hero-tagline">Precision Beyond Time</p>
+       <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-8 fade-in" id="hero-title">The Art of<br><span class="text-gold">Timekeeping</span></h1>
+       <p class="text-gray-400 text-lg leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0 fade-in">Where Swiss precision meets artistic mastery. Each STELLIZ timepiece is a testament to centuries of horological excellence.</p>
+       <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start fade-in"><a href="#collection" class="btn-gold px-10 py-4 text-navy text-sm tracking-widest uppercase font-medium"> Explore Collection </a> <a href="#story" class="btn-outline px-10 py-4 text-sm tracking-widest uppercase"> Our Story </a>
+       </div>
+      </div><!-- Hero Watch -->
+      <div class="relative flex justify-center items-center">
+       <div class="absolute w-80 h-80 md:w-96 md:h-96 rounded-full border border-gold/20"></div>
+       <div class="absolute w-64 h-64 md:w-80 md:h-80 rounded-full border border-gold/10"></div>
+       <div class="parallax-watch float-animation">
+        <svg viewbox="0 0 300 400" class="w-64 md:w-80 h-auto drop-shadow-2xl"><!-- Watch Strap Top --> <path d="M115 10 L185 10 L180 80 L120 80 Z" fill="#1a1a1a" stroke="#C9A962" stroke-width="0.5" /> <rect x="125" y="15" width="50" height="60" rx="2" fill="#0d0d0d" /> <!-- Watch Case --> <circle cx="150" cy="200" r="95" fill="url(#caseGradient)" stroke="#C9A962" stroke-width="2" /> <circle cx="150" cy="200" r="88" fill="#0A0E1A" stroke="#C9A962" stroke-width="1" /> <!-- Watch Face --> <circle cx="150" cy="200" r="80" fill="url(#faceGradient)" /> <!-- Hour Markers --> <g fill="#C9A962">
+          <rect x="148" y="125" width="4" height="15" rx="1" />
+          <rect x="148" y="260" width="4" height="15" rx="1" />
+          <rect x="75" y="198" width="15" height="4" rx="1" />
+          <rect x="210" y="198" width="15" height="4" rx="1" /> <!-- Other markers -->
+          <circle cx="150" cy="145" r="2" />
+          <circle cx="150" cy="255" r="2" />
+          <circle cx="95" cy="200" r="2" />
+          <circle cx="205" cy="200" r="2" />
+          <circle cx="108" cy="152" r="1.5" />
+          <circle cx="192" cy="152" r="1.5" />
+          <circle cx="108" cy="248" r="1.5" />
+          <circle cx="192" cy="248" r="1.5" />
+         </g> <!-- Brand Name --> <text x="150" y="165" text-anchor="middle" fill="#C9A962" font-family="Cormorant Garamond, serif" font-size="12" letter-spacing="3">
+          STELLIZ
+         </text> <text x="150" y="245" text-anchor="middle" fill="#666" font-family="Montserrat, sans-serif" font-size="6" letter-spacing="1">
+          SWISS MADE
+         </text> <!-- Hands --> <line x1="150" y1="200" x2="150" y2="145" stroke="#C9A962" stroke-width="3" stroke-linecap="round" /> <line x1="150" y1="200" x2="185" y2="180" stroke="#C9A962" stroke-width="2" stroke-linecap="round" /> <line x1="150" y1="200" x2="170" y2="230" stroke="#E5D4A1" stroke-width="1" stroke-linecap="round" /> <circle cx="150" cy="200" r="5" fill="#C9A962" /> <circle cx="150" cy="200" r="2" fill="#0A0E1A" /> <!-- Crown --> <rect x="245" y="190" width="15" height="20" rx="3" fill="url(#crownGradient)" stroke="#C9A962" stroke-width="1" /> <line x1="250" y1="195" x2="250" y2="205" stroke="#C9A962" stroke-width="0.5" /> <line x1="255" y1="195" x2="255" y2="205" stroke="#C9A962" stroke-width="0.5" /> <!-- Watch Strap Bottom --> <path d="M120 320 L180 320 L185 390 L115 390 Z" fill="#1a1a1a" stroke="#C9A962" stroke-width="0.5" /> <rect x="125" y="325" width="50" height="60" rx="2" fill="#0d0d0d" /> <!-- Gradients --> <defs>
+          <lineargradient id="caseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+           <stop offset="0%" style="stop-color:#C9A962" />
+           <stop offset="50%" style="stop-color:#8B7355" />
+           <stop offset="100%" style="stop-color:#C9A962" />
+          </lineargradient>
+          <radialgradient id="faceGradient" cx="30%" cy="30%">
+           <stop offset="0%" style="stop-color:#1a1f2e" />
+           <stop offset="100%" style="stop-color:#0A0E1A" />
+          </radialgradient>
+          <lineargradient id="crownGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+           <stop offset="0%" style="stop-color:#8B7355" />
+           <stop offset="50%" style="stop-color:#C9A962" />
+           <stop offset="100%" style="stop-color:#8B7355" />
+          </lineargradient>
+         </defs>
+        </svg>
+       </div>
+      </div>
+     </div>
+    </div><!-- Scroll Indicator -->
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"><span class="text-gold text-xs tracking-widest uppercase mb-3">Discover</span>
+     <div class="w-px h-12 bg-gradient-to-b from-gold to-transparent"></div>
+    </div>
+   </section><!-- Section Divider -->
+   <div class="section-divider max-w-4xl mx-auto"></div><!-- Brand Story Section -->
+   <section id="story" class="py-32 relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+     <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="fade-in">
+       <p class="text-gold text-sm tracking-[0.3em] uppercase mb-4">Our Heritage</p>
+       <h2 class="font-serif text-4xl md:text-5xl font-light mb-8" id="story-title">A Legacy of Excellence</h2>
+       <div class="w-20 h-px bg-gold mb-8 line-reveal"></div>
+       <p class="text-gray-400 leading-relaxed mb-6">Founded in the heart of Geneva in 1892, STELLIZ has been crafting exceptional timepieces for over a century. Our master watchmakers combine traditional Swiss craftsmanship with innovative design to create watches that transcend generations.</p>
+       <p class="text-gray-400 leading-relaxed mb-8">Each STELLIZ watch undergoes 847 individual quality checks, ensuring perfection in every detail. From the precise movement of our in-house calibers to the meticulous finishing of every component, excellence is our only standard.</p>
+       <div class="grid grid-cols-3 gap-8 mt-12">
+        <div class="text-center">
+         <p class="font-serif text-4xl text-gold mb-2">130+</p>
+         <p class="text-gray-500 text-sm tracking-wider uppercase">Years of Legacy</p>
+        </div>
+        <div class="text-center">
+         <p class="font-serif text-4xl text-gold mb-2">847</p>
+         <p class="text-gray-500 text-sm tracking-wider uppercase">Quality Checks</p>
+        </div>
+        <div class="text-center">
+         <p class="font-serif text-4xl text-gold mb-2">42</p>
+         <p class="text-gray-500 text-sm tracking-wider uppercase">Master Artisans</p>
+        </div>
+       </div>
+      </div>
+      <div class="relative fade-in">
+       <div class="aspect-square bg-navy-light rounded-sm overflow-hidden border border-gold/10">
+        <div class="w-full h-full flex items-center justify-center relative">
+         <div class="absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent"></div>
+         <svg viewbox="0 0 200 200" class="w-48 h-48 opacity-80"><!-- Gear/Movement Design --> <circle cx="100" cy="100" r="80" fill="none" stroke="#C9A962" stroke-width="0.5" /> <circle cx="100" cy="100" r="60" fill="none" stroke="#C9A962" stroke-width="0.5" /> <circle cx="100" cy="100" r="40" fill="none" stroke="#C9A962" stroke-width="1" /> <circle cx="100" cy="100" r="20" fill="none" stroke="#C9A962" stroke-width="1" /> <!-- Gear teeth --> <g stroke="#C9A962" stroke-width="0.5">
+           <line x1="100" y1="20" x2="100" y2="35" />
+           <line x1="100" y1="165" x2="100" y2="180" />
+           <line x1="20" y1="100" x2="35" y2="100" />
+           <line x1="165" y1="100" x2="180" y2="100" />
+           <line x1="43" y1="43" x2="54" y2="54" />
+           <line x1="146" y1="146" x2="157" y2="157" />
+           <line x1="43" y1="157" x2="54" y2="146" />
+           <line x1="146" y1="54" x2="157" y2="43" />
+          </g> <circle cx="100" cy="100" r="5" fill="#C9A962" />
+         </svg>
+        </div>
+       </div>
+       <div class="absolute -bottom-6 -right-6 w-32 h-32 border border-gold/30"></div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section Divider -->
+   <div class="section-divider max-w-4xl mx-auto"></div><!-- Collection Section -->
+   <section id="collection" class="py-32 bg-navy-light">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+     <div class="text-center mb-20 fade-in">
+      <p class="text-gold text-sm tracking-[0.3em] uppercase mb-4">Featured Collection</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-light mb-6">Masterpieces of Time</h2>
+      <div class="w-20 h-px bg-gold mx-auto line-reveal"></div>
+     </div>
+     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8"><!-- Watch 1 -->
+      <div class="watch-card group cursor-pointer fade-in">
+       <div class="relative aspect-square bg-navy rounded-sm overflow-hidden border border-gold/10 mb-6">
+        <div class="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent z-10"></div>
+        <div class="watch-overlay absolute inset-0 bg-gold/10 opacity-0 z-20 flex items-center justify-center"><span class="btn-outline px-6 py-2 text-xs tracking-widest">View Details</span>
+        </div>
+        <div class="watch-image w-full h-full flex items-center justify-center transition-transform duration-500">
+         <svg viewbox="0 0 120 160" class="w-24 h-32"><rect x="45" y="5" width="30" height="30" rx="2" fill="#1a1a1a" stroke="#C9A962" stroke-width="0.3" /> <circle cx="60" cy="80" r="35" fill="#0A0E1A" stroke="#C9A962" stroke-width="1.5" /> <circle cx="60" cy="80" r="30" fill="#0d1117" stroke="#C9A962" stroke-width="0.5" /> <text x="60" y="75" text-anchor="middle" fill="#C9A962" font-size="4">
+           STELLIZ
+          </text> <line x1="60" y1="80" x2="60" y2="55" stroke="#C9A962" stroke-width="1.5" /> <line x1="60" y1="80" x2="80" y2="70" stroke="#C9A962" stroke-width="1" /> <circle cx="60" cy="80" r="2" fill="#C9A962" /> <rect x="45" y="125" width="30" height="30" rx="2" fill="#1a1a1a" stroke="#C9A962" stroke-width="0.3" />
+         </svg>
+        </div>
+       </div>
+       <div class="text-center">
+        <h3 class="font-serif text-xl mb-2 group-hover:text-gold transition-colors">Celestial</h3>
+        <p class="text-gray-500 text-sm mb-3">Automatic · 41mm</p>
+        <p class="text-gold font-light">$12,500</p>
+       </div>
+      </div><!-- Watch 2 -->
+      <div class="watch-card group cursor-pointer fade-in" style="transition-delay: 0.1s;">
+       <div class="relative aspect-square bg-navy rounded-sm overflow-hidden border border-gold/10 mb-6">
+        <div class="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent z-10"></div>
+        <div class="watch-overlay absolute inset-0 bg-gold/10 opacity-0 z-20 flex items-center justify-center"><span class="btn-outline px-6 py-2 text-xs tracking-widest">View Details</span>
+        </div>
+        <div class="watch-image w-full h-full flex items-center justify-center transition-transform duration-500">
+         <svg viewbox="0 0 120 160" class="w-24 h-32"><rect x="45" y="5" width="30" height="30" rx="2" fill="#2a2520" stroke="#C9A962" stroke-width="0.3" /> <circle cx="60" cy="80" r="35" fill="url(#gold2)" stroke="#C9A962" stroke-width="1.5" /> <circle cx="60" cy="80" r="30" fill="#f5f5f0" stroke="#C9A962" stroke-width="0.5" /> <text x="60" y="75" text-anchor="middle" fill="#0A0E1A" font-size="4">
+           STELLIZ
+          </text> <line x1="60" y1="80" x2="60" y2="58" stroke="#0A0E1A" stroke-width="1.5" /> <line x1="60" y1="80" x2="75" y2="85" stroke="#0A0E1A" stroke-width="1" /> <circle cx="60" cy="80" r="2" fill="#C9A962" /> <rect x="45" y="125" width="30" height="30" rx="2" fill="#2a2520" stroke="#C9A962" stroke-width="0.3" /> <defs>
+           <lineargradient id="gold2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#C9A962" />
+            <stop offset="100%" style="stop-color:#8B7355" />
+           </lineargradient>
+          </defs>
+         </svg>
+        </div>
+       </div>
+       <div class="text-center">
+        <h3 class="font-serif text-xl mb-2 group-hover:text-gold transition-colors">Monarch</h3>
+        <p class="text-gray-500 text-sm mb-3">Manual · 39mm</p>
+        <p class="text-gold font-light">$18,900</p>
+       </div>
+      </div><!-- Watch 3 -->
+      <div class="watch-card group cursor-pointer fade-in" style="transition-delay: 0.2s;">
+       <div class="relative aspect-square bg-navy rounded-sm overflow-hidden border border-gold/10 mb-6">
+        <div class="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent z-10"></div>
+        <div class="watch-overlay absolute inset-0 bg-gold/10 opacity-0 z-20 flex items-center justify-center"><span class="btn-outline px-6 py-2 text-xs tracking-widest">View Details</span>
+        </div>
+        <div class="watch-image w-full h-full flex items-center justify-center transition-transform duration-500">
+         <svg viewbox="0 0 120 160" class="w-24 h-32"><rect x="45" y="5" width="30" height="30" rx="2" fill="#1a1a1a" stroke="#444" stroke-width="0.3" /> <circle cx="60" cy="80" r="35" fill="#2a2a2a" stroke="#444" stroke-width="1.5" /> <circle cx="60" cy="80" r="30" fill="#1a1a1a" stroke="#333" stroke-width="0.5" /> <text x="60" y="75" text-anchor="middle" fill="#C9A962" font-size="4">
+           STELLIZ
+          </text> <line x1="60" y1="80" x2="60" y2="55" stroke="#C9A962" stroke-width="1.5" /> <line x1="60" y1="80" x2="78" y2="90" stroke="#C9A962" stroke-width="1" /> <circle cx="60" cy="80" r="2" fill="#C9A962" /> <rect x="45" y="125" width="30" height="30" rx="2" fill="#1a1a1a" stroke="#444" stroke-width="0.3" />
+         </svg>
+        </div>
+       </div>
+       <div class="text-center">
+        <h3 class="font-serif text-xl mb-2 group-hover:text-gold transition-colors">Obsidian</h3>
+        <p class="text-gray-500 text-sm mb-3">Chronograph · 43mm</p>
+        <p class="text-gold font-light">$24,500</p>
+       </div>
+      </div><!-- Watch 4 -->
+      <div class="watch-card group cursor-pointer fade-in" style="transition-delay: 0.3s;">
+       <div class="relative aspect-square bg-navy rounded-sm overflow-hidden border border-gold/10 mb-6">
+        <div class="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent z-10"></div>
+        <div class="watch-overlay absolute inset-0 bg-gold/10 opacity-0 z-20 flex items-center justify-center"><span class="btn-outline px-6 py-2 text-xs tracking-widest">View Details</span>
+        </div>
+        <div class="watch-image w-full h-full flex items-center justify-center transition-transform duration-500">
+         <svg viewbox="0 0 120 160" class="w-24 h-32"><rect x="45" y="5" width="30" height="30" rx="2" fill="#1a2530" stroke="#C9A962" stroke-width="0.3" /> <circle cx="60" cy="80" r="35" fill="#0A0E1A" stroke="#C9A962" stroke-width="1.5" /> <circle cx="60" cy="80" r="30" fill="#0a1525" stroke="#C9A962" stroke-width="0.5" /> <text x="60" y="75" text-anchor="middle" fill="#C9A962" font-size="4">
+           STELLIZ
+          </text> <line x1="60" y1="80" x2="60" y2="60" stroke="#C9A962" stroke-width="1.5" /> <line x1="60" y1="80" x2="72" y2="75" stroke="#C9A962" stroke-width="1" /> <circle cx="60" cy="80" r="2" fill="#C9A962" /> <!-- Moon phase indicator --> <circle cx="60" cy="95" r="6" fill="#0A0E1A" stroke="#C9A962" stroke-width="0.3" /> <path d="M57 95 A3 3 0 1 1 63 95" fill="#C9A962" /> <rect x="45" y="125" width="30" height="30" rx="2" fill="#1a2530" stroke="#C9A962" stroke-width="0.3" />
+         </svg>
+        </div>
+       </div>
+       <div class="text-center">
+        <h3 class="font-serif text-xl mb-2 group-hover:text-gold transition-colors">Luna Grande</h3>
+        <p class="text-gray-500 text-sm mb-3">Moon Phase · 40mm</p>
+        <p class="text-gold font-light">$32,000</p>
+       </div>
+      </div>
+     </div>
+     <div class="text-center mt-16 fade-in"><a href="#" class="btn-outline px-10 py-4 text-sm tracking-widest uppercase inline-block"> View Full Collection </a>
+     </div>
+    </div>
+   </section><!-- Section Divider -->
+   <div class="section-divider max-w-4xl mx-auto"></div><!-- Craftsmanship Section -->
+   <section id="craftsmanship" class="py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+     <div class="text-center mb-20 fade-in">
+      <p class="text-gold text-sm tracking-[0.3em] uppercase mb-4">The Art</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-light mb-6">Exceptional Craftsmanship</h2>
+      <div class="w-20 h-px bg-gold mx-auto line-reveal"></div>
+     </div>
+     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8"><!-- Craft 1 -->
+      <div class="craft-card text-center p-8 border border-gold/10 bg-navy-light/50 hover:border-gold/30 transition-all duration-500 fade-in">
+       <div class="craft-icon w-16 h-16 mx-auto mb-6">
+        <svg viewbox="0 0 64 64" class="w-full h-full"><circle cx="32" cy="32" r="28" fill="none" stroke="#C9A962" stroke-width="1" /> <circle cx="32" cy="32" r="20" fill="none" stroke="#C9A962" stroke-width="0.5" /> <g stroke="#C9A962" stroke-width="0.5">
+          <line x1="32" y1="8" x2="32" y2="14" />
+          <line x1="32" y1="50" x2="32" y2="56" />
+          <line x1="8" y1="32" x2="14" y2="32" />
+          <line x1="50" y1="32" x2="56" y2="32" />
+         </g> <circle cx="32" cy="32" r="3" fill="#C9A962" />
+        </svg>
+       </div>
+       <h3 class="font-serif text-xl text-gold mb-4">Swiss Movement</h3>
+       <p class="text-gray-500 text-sm leading-relaxed">In-house calibers with 72-hour power reserve, crafted to COSC chronometer standards.</p>
+      </div><!-- Craft 2 -->
+      <div class="craft-card text-center p-8 border border-gold/10 bg-navy-light/50 hover:border-gold/30 transition-all duration-500 fade-in" style="transition-delay: 0.1s;">
+       <div class="craft-icon w-16 h-16 mx-auto mb-6">
+        <svg viewbox="0 0 64 64" class="w-full h-full"><path d="M32 8 L8 56 L56 56 Z" fill="none" stroke="#C9A962" stroke-width="1" /> <path d="M32 20 L16 48 L48 48 Z" fill="none" stroke="#C9A962" stroke-width="0.5" /> <circle cx="32" cy="40" r="4" fill="#C9A962" />
+        </svg>
+       </div>
+       <h3 class="font-serif text-xl text-gold mb-4">Sapphire Crystal</h3>
+       <p class="text-gray-500 text-sm leading-relaxed">Anti-reflective sapphire with 9 Mohs hardness, virtually scratchproof protection.</p>
+      </div><!-- Craft 3 -->
+      <div class="craft-card text-center p-8 border border-gold/10 bg-navy-light/50 hover:border-gold/30 transition-all duration-500 fade-in" style="transition-delay: 0.2s;">
+       <div class="craft-icon w-16 h-16 mx-auto mb-6">
+        <svg viewbox="0 0 64 64" class="w-full h-full"><rect x="12" y="20" width="40" height="24" rx="2" fill="none" stroke="#C9A962" stroke-width="1" /> <line x1="12" y1="28" x2="52" y2="28" stroke="#C9A962" stroke-width="0.5" /> <line x1="12" y1="36" x2="52" y2="36" stroke="#C9A962" stroke-width="0.5" /> <rect x="20" y="12" width="24" height="8" rx="1" fill="none" stroke="#C9A962" stroke-width="0.5" /> <rect x="20" y="44" width="24" height="8" rx="1" fill="none" stroke="#C9A962" stroke-width="0.5" />
+        </svg>
+       </div>
+       <h3 class="font-serif text-xl text-gold mb-4">Premium Materials</h3>
+       <p class="text-gray-500 text-sm leading-relaxed">904L stainless steel and 18K gold, finished by hand using traditional techniques.</p>
+      </div><!-- Craft 4 -->
+      <div class="craft-card text-center p-8 border border-gold/10 bg-navy-light/50 hover:border-gold/30 transition-all duration-500 fade-in" style="transition-delay: 0.3s;">
+       <div class="craft-icon w-16 h-16 mx-auto mb-6">
+        <svg viewbox="0 0 64 64" class="w-full h-full"><circle cx="32" cy="32" r="24" fill="none" stroke="#C9A962" stroke-width="1" /> <path d="M32 12 L32 32 L48 32" fill="none" stroke="#C9A962" stroke-width="1.5" stroke-linecap="round" /> <text x="32" y="50" text-anchor="middle" fill="#C9A962" font-size="8">
+          5yr
+         </text>
+        </svg>
+       </div>
+       <h3 class="font-serif text-xl text-gold mb-4">5-Year Warranty</h3>
+       <p class="text-gray-500 text-sm leading-relaxed">Comprehensive international warranty with dedicated service centers worldwide.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section Divider -->
+   <div class="section-divider max-w-4xl mx-auto"></div><!-- Testimonials Section -->
+   <section class="py-32 bg-navy-light">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+     <div class="text-center mb-20 fade-in">
+      <p class="text-gold text-sm tracking-[0.3em] uppercase mb-4">Testimonials</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-light mb-6">Words of Distinction</h2>
+      <div class="w-20 h-px bg-gold mx-auto line-reveal"></div>
+     </div>
+     <div class="grid md:grid-cols-3 gap-8"><!-- Testimonial 1 -->
+      <div class="testimonial-card p-8 border border-gold/10 bg-navy fade-in">
+       <div class="flex mb-6">
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+       </div>
+       <p class="text-gray-400 italic mb-6 leading-relaxed">"The Celestial exceeded every expectation. The attention to detail is remarkable—a true masterpiece that I'll pass down to my son."</p>
+       <div>
+        <p class="font-serif text-lg text-white">James Morrison</p>
+        <p class="text-gold text-sm">CEO, Morrison Holdings</p>
+       </div>
+      </div><!-- Testimonial 2 -->
+      <div class="testimonial-card p-8 border border-gold/10 bg-navy fade-in" style="transition-delay: 0.1s;">
+       <div class="flex mb-6">
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+       </div>
+       <p class="text-gray-400 italic mb-6 leading-relaxed">"STELLIZ represents the pinnacle of Swiss watchmaking. The Luna Grande is not just a timepiece—it's a work of art on my wrist."</p>
+       <div>
+        <p class="font-serif text-lg text-white">Dr. Elena Richter</p>
+        <p class="text-gold text-sm">Art Collector, Vienna</p>
+       </div>
+      </div><!-- Testimonial 3 -->
+      <div class="testimonial-card p-8 border border-gold/10 bg-navy fade-in" style="transition-delay: 0.2s;">
+       <div class="flex mb-6">
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+       </div>
+       <p class="text-gray-400 italic mb-6 leading-relaxed">"After owning many luxury watches, my Obsidian stands apart. The craftsmanship is unparalleled, and the service is exceptional."</p>
+       <div>
+        <p class="font-serif text-lg text-white">Marcus Chen</p>
+        <p class="text-gold text-sm">Architect, Singapore</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section Divider -->
+   <div class="section-divider max-w-4xl mx-auto"></div><!-- CTA Section -->
+   <section id="contact" class="py-32 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+     <div class="absolute top-0 left-1/4 w-96 h-96 bg-gold/20 rounded-full blur-3xl"></div>
+     <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-gold/10 rounded-full blur-2xl"></div>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
+     <div class="fade-in">
+      <p class="text-gold text-sm tracking-[0.3em] uppercase mb-4">Experience Excellence</p>
+      <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-light mb-8" id="cta-title">Begin Your Journey</h2>
+      <div class="w-20 h-px bg-gold mx-auto mb-8 line-reveal"></div>
+      <p class="text-gray-400 text-lg leading-relaxed mb-12 max-w-2xl mx-auto">Visit our flagship boutique in Geneva or schedule a private consultation with our horological experts. Discover the STELLIZ difference.</p>
+      <div class="flex flex-col sm:flex-row gap-6 justify-center"><a href="#" class="btn-gold px-12 py-5 text-navy text-sm tracking-widest uppercase font-medium" id="cta-button"> Book a Consultation </a> <a href="#" class="btn-outline px-12 py-5 text-sm tracking-widest uppercase"> Find a Boutique </a>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="border-t border-gold/10 py-16 bg-navy-light">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-12 mb-12"><!-- Brand -->
+      <div class="md:col-span-1"><a href="#" class="font-serif text-2xl tracking-[0.3em] text-gold block mb-4" id="footer-brand">STELLIZ</a>
+       <p class="text-gray-500 text-sm leading-relaxed" id="footer-tagline">Precision Beyond Time</p>
+      </div><!-- Collections -->
+      <div>
+       <h4 class="text-white text-sm tracking-widest uppercase mb-6">Collections</h4>
+       <ul class="space-y-3">
+        <li><a href="#" class="text-gray-500 text-sm hover:text-gold transition-colors">Celestial</a></li>
+        <li><a href="#" class="text-gray-500 text-sm hover:text-gold transition-colors">Monarch</a></li>
+        <li><a href="#" class="text-gray-500 text-sm hover:text-gold transition-colors">Obsidian</a></li>
+        <li><a href="#" class="text-gray-500 text-sm hover:text-gold transition-colors">Luna Grande</a></li>
+       </ul>
+      </div><!-- Services -->
+      <div>
+       <h4 class="text-white text-sm tracking-widest uppercase mb-6">Services</h4>
+       <ul class="space-y-3">
+        <li><a href="#" class="text-gray-500 text-sm hover:text-gold transition-colors">Boutique Locator</a></li>
+        <li><a href="#" class="text-gray-500 text-sm hover:text-gold transition-colors">Watch Care</a></li>
+        <li><a href="#" class="text-gray-500 text-sm hover:text-gold transition-colors">Service &amp; Repair</a></li>
+        <li><a href="#" class="text-gray-500 text-sm hover:text-gold transition-colors">Warranty</a></li>
+       </ul>
+      </div><!-- Contact -->
+      <div>
+       <h4 class="text-white text-sm tracking-widest uppercase mb-6">Contact</h4>
+       <ul class="space-y-3">
+        <li class="text-gray-500 text-sm">Rue du Rhône 118</li>
+        <li class="text-gray-500 text-sm">1204 Geneva, Switzerland</li>
+        <li><a href="mailto:contact@stelliz.com" class="text-gray-500 text-sm hover:text-gold transition-colors">contact@stelliz.com</a></li>
+        <li><a href="tel:+41227001892" class="text-gray-500 text-sm hover:text-gold transition-colors">+41 22 700 1892</a></li>
+       </ul>
+      </div>
+     </div><!-- Bottom Footer -->
+     <div class="pt-8 border-t border-gold/10 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-600 text-xs tracking-wider mb-4 md:mb-0">© 2024 STELLIZ. All rights reserved.</p>
+      <div class="flex space-y-0 space-x-6"><a href="#" class="text-gray-500 hover:text-gold transition-colors text-xs tracking-wider uppercase">Privacy</a> <a href="#" class="text-gray-500 hover:text-gold transition-colors text-xs tracking-wider uppercase">Terms</a> <a href="#" class="text-gray-500 hover:text-gold transition-colors text-xs tracking-wider uppercase">Cookies</a>
+      </div>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      brand_name: 'STELLIZ',
+      tagline: 'Precision Beyond Time',
+      hero_title: 'The Art of Timekeeping',
+      story_title: 'A Legacy of Excellence',
+      cta_title: 'Begin Your Journey',
+      cta_button: 'Book a Consultation',
+      primary_color: '#C9A962',
+      background_color: '#0A0E1A',
+      text_color: '#F5F5F5',
+      secondary_color: '#141B2D',
+      accent_color: '#A0A0A0'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Scroll animation observer
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Initialize animations
+    function initAnimations() {
+      document.querySelectorAll('.fade-in, .line-reveal').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // Mobile menu toggle
+    function initMobileMenu() {
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+          });
+        });
+      }
+    }
+
+    // Parallax effect for hero watch
+    function initParallax() {
+      const parallaxWatch = document.querySelector('.parallax-watch');
+      
+      if (parallaxWatch) {
+        document.addEventListener('mousemove', (e) => {
+          const x = (window.innerWidth / 2 - e.clientX) / 50;
+          const y = (window.innerHeight / 2 - e.clientY) / 50;
+          parallaxWatch.style.transform = `translate(${x}px, ${y}px)`;
+        });
+      }
+    }
+
+    // Update UI based on config
+    async function onConfigChange(cfg) {
+      config = { ...defaultConfig, ...cfg };
+      
+      // Update brand names
+      const navBrand = document.getElementById('nav-brand');
+      const footerBrand = document.getElementById('footer-brand');
+      if (navBrand) navBrand.textContent = config.brand_name || defaultConfig.brand_name;
+      if (footerBrand) footerBrand.textContent = config.brand_name || defaultConfig.brand_name;
+      
+      // Update tagline
+      const heroTagline = document.getElementById('hero-tagline');
+      const footerTagline = document.getElementById('footer-tagline');
+      if (heroTagline) heroTagline.textContent = config.tagline || defaultConfig.tagline;
+      if (footerTagline) footerTagline.textContent = config.tagline || defaultConfig.tagline;
+      
+      // Update hero title
+      const heroTitle = document.getElementById('hero-title');
+      if (heroTitle) {
+        const title = config.hero_title || defaultConfig.hero_title;
+        const parts = title.split(' ');
+        if (parts.length > 2) {
+          heroTitle.innerHTML = `${parts.slice(0, -1).join(' ')}<br><span class="text-gold">${parts.slice(-1)}</span>`;
+        } else {
+          heroTitle.innerHTML = `${parts[0]}<br><span class="text-gold">${parts.slice(1).join(' ')}</span>`;
+        }
+      }
+      
+      // Update story title
+      const storyTitle = document.getElementById('story-title');
+      if (storyTitle) storyTitle.textContent = config.story_title || defaultConfig.story_title;
+      
+      // Update CTA
+      const ctaTitle = document.getElementById('cta-title');
+      const ctaButton = document.getElementById('cta-button');
+      if (ctaTitle) ctaTitle.textContent = config.cta_title || defaultConfig.cta_title;
+      if (ctaButton) ctaButton.textContent = config.cta_button || defaultConfig.cta_button;
+      
+      // Update colors via CSS custom properties
+      document.documentElement.style.setProperty('--gold', config.primary_color || defaultConfig.primary_color);
+      document.documentElement.style.setProperty('--navy', config.background_color || defaultConfig.background_color);
+      document.documentElement.style.setProperty('--text-primary', config.text_color || defaultConfig.text_color);
+      document.documentElement.style.setProperty('--navy-light', config.secondary_color || defaultConfig.secondary_color);
+      document.documentElement.style.setProperty('--text-secondary', config.accent_color || defaultConfig.accent_color);
+    }
+    // Initialize SDK
+    async function init() {
+      await onConfigChange(config);
+      initAnimations();
+      initMobileMenu();
+      initParallax();
+    }
+
+    init();
+  </script>
+ </body>
+</html>
